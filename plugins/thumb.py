@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from pyrogram import filters
 
-from DanteMusic import app
+from KNMusic import app
 
 
 def get_video_title(video_id):

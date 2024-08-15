@@ -1,7 +1,7 @@
 import requests
 from pyrogram import filters
 
-from DanteMusic import api, app
+from KNMusic import api, app
 
 
 @app.on_message(filters.command(["bard"]))

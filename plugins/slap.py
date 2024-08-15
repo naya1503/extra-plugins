@@ -1,4 +1,4 @@
-from DanteMusic import app 
+from KNMusic import app 
 from pyrogram import filters
 import nekos
 

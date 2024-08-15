@@ -4,7 +4,7 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from telegraph import upload_file
 
-from DanteMusic import app
+from KNMusic import app
 
 
 @app.on_message(filters.command(["tgm", "tgt", "telegraph", "tl"]))

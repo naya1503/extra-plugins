@@ -1,9 +1,9 @@
 #
 # Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/TheTeamVivek/DanteMusic > project,
+# This file is part of < https://github.com/TheTeamVivek/KNMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TheTeamVivek/DanteMusic/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/KNMusic/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -12,11 +12,11 @@ from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.types import ChatJoinRequest
 from pyrogram.errors.exceptions.bad_request_400 import UserAlreadyParticipant
-from DanteMusic import app
-from DanteMusic.core.mongo import mongodb
-from DanteMusic.misc import SUDOERS
-from DanteMusic.utils.keyboard import ikb
-from DanteMusic.utils.permissions import adminsOnly, member_permissions
+from KNMusic import app
+from KNMusic.core.mongo import mongodb
+from KNMusic.misc import SUDOERS
+from KNMusic.utils.keyboard import ikb
+from KNMusic.utils.permissions import adminsOnly, member_permissions
 
 approvaldb = mongodb.autoapprove
 

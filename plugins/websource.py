@@ -1,9 +1,8 @@
 import requests
+from KNMusic import app
 from pyrogram import filters
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
-from KNMusic import app
 
 
 def download_website(url):

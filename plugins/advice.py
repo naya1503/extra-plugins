@@ -1,8 +1,7 @@
-from pyrogram import filters
-from TheApi import api as aapi
-
 from config import LOG_GROUP_ID
 from KNMusic import api, app
+from pyrogram import filters
+from TheApi import api as aapi
 
 
 @app.on_message(filters.command("advice"))

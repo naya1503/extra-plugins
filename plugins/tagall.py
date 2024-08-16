@@ -1,11 +1,10 @@
 import asyncio
+
+from KNMusic import app
+from KNMusic.utils.filter import admin_filter
 from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.errors import FloodWait
-
-from KNMusic import app
-from KNMusic.utils.database import get_assistant
-from KNMusic.utils.filter import admin_filter
 
 SPAM_CHATS = []
 
@@ -178,8 +177,9 @@ async def tag_all_admins(_, message):
         except Exception:
             pass
 
+
 @app.on_message(
-    filters.command(["admin", "admins","report"], prefixes=["/", "@"]) & filters.group
+    filters.command(["admin", "admins", "report"], prefixes=["/", "@"]) & filters.group
 )
 async def admintag_with_reporting(client, message):
     if not message.from_user:
@@ -194,7 +194,9 @@ async def admintag_with_reporting(client, message):
     ]
     if message.command[0] == "report":
         if from_user_id in admins:
-            return await message.reply_text("opps! you are looks like an admin!\nyou can't report any users to admin")
+            return await message.reply_text(
+                "opps! you are looks like an admin!\nyou can't report any users to admin"
+            )
 
     if from_user_id in admins:
         return await tag_all_admins(client, message)
@@ -253,6 +255,8 @@ async def cancelcmd(_, message):
     else:
         await message.reply_text("**no process ongoing!**")
         return
+
+
 __MODULE__ = "Tagall"
 __HELP__ = """<blockquote><b>
 

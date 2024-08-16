@@ -1,7 +1,6 @@
-from pyrogram import enums, filters
-
 from KNMusic import app
 from KNMusic.utils.filter import admin_filter
+from pyrogram import enums, filters
 
 # ------------------------------------------------------------------------------- #
 

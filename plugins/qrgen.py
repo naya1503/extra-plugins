@@ -1,6 +1,5 @@
-from pyrogram import filters
-
 from KNMusic import app
+from pyrogram import filters
 
 
 @app.on_message(filters.command(["qr"]))
@@ -13,6 +12,7 @@ async def write_text(client, message):
     await app.send_photo(
         chat_id=message.chat.id, photo=photo_url, caption="Here is your qrcode"
     )
+
 
 __MODULE__ = "Qr"
 

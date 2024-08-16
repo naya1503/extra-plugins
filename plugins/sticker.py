@@ -5,20 +5,15 @@ from asyncio import gather
 from traceback import format_exc
 from typing import List
 
+from KNMusic import app
 from PIL import Image
 from pyrogram import Client, errors, filters, raw
-from pyrogram.errors import (
-    PeerIdInvalid,
-    ShortnameOccupyFailed,
-    StickerEmojiInvalid,
-    StickerPngDimensions,
-    StickerPngNopng,
-    UserIsBlocked,
-)
+from pyrogram.errors import (PeerIdInvalid, ShortnameOccupyFailed,
+                             StickerEmojiInvalid, StickerPngDimensions,
+                             StickerPngNopng, UserIsBlocked)
 from pyrogram.file_id import FileId
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
-from KNMusic import app
 from utils.error import capture_err
 
 BOT_USERNAME = app.username

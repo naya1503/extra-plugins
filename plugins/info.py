@@ -1,12 +1,11 @@
 import os
 
-from pyrogram import enums, filters
-from pyrogram.types import Message
-
 from KNMusic import app
 from KNMusic.misc import SUDOERS
 from KNMusic.utils.database import is_gbanned_user
 from KNMusic.utils.sections import section
+from pyrogram import enums, filters
+from pyrogram.types import Message
 
 
 async def userstatus(user_id):
@@ -39,8 +38,8 @@ async def get_user_info(user, already=False):
     mention = user.mention("Link")
     dc_id = user.dc_id
     photo_id = user.photo.big_file_id if user.photo else None
-    is_gbanned = await is_gbanned_user(user_id)
-    is_sudo = user_id in SUDOERS
+    await is_gbanned_user(user_id)
+    user_id in SUDOERS
     is_premium = user.is_premium
     body = {
         "name": [first_name],
@@ -49,7 +48,7 @@ async def get_user_info(user, already=False):
         "dc id": dc_id,
         "mention": [mention],
         "preimium": is_premium,
-        "last seen" : online,
+        "last seen": online,
     }
     caption = section("user info", body)
     return [caption, photo_id]
@@ -93,10 +92,12 @@ async def info_func(_, message: Message):
         user_input = message.text.split(None, 1)[1]
         if user_input.isdigit():
             user = int(user_input)
-        elif user_input.startswith('@'):
+        elif user_input.startswith("@"):
             user = user_input
         else:
-            return await message.reply_text("please provide a user's user id or username or reply to a user to get info")
+            return await message.reply_text(
+                "please provide a user's user id or username or reply to a user to get info"
+            )
 
     m = await message.reply_text("processing...")
 

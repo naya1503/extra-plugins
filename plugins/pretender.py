@@ -1,12 +1,11 @@
 from typing import Dict, Union
 
-from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
-from pyrogram import filters
-from pyrogram.types import Message
-
 from config import MONGO_DB_URI
 from KNMusic import app
 from KNMusic.utils.filter import admin_filter
+from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
+from pyrogram import filters
+from pyrogram.types import Message
 
 mongo = MongoCli(MONGO_DB_URI).Rankings
 
@@ -137,6 +136,7 @@ async def set_mataa(_, message: Message):
             )
     else:
         await message.reply("**detected pretender usage:\n/pretender on|off**")
+
 
 __MODULE__ = "Tender"
 __HELP__ = """<blockquote><b>

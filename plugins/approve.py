@@ -8,24 +8,26 @@
 # All rights reserved.
 #
 
-from pyrogram import filters
-from pyrogram.enums import ChatMembersFilter
-from pyrogram.types import ChatJoinRequest
-from pyrogram.errors.exceptions.bad_request_400 import UserAlreadyParticipant
 from KNMusic import app
 from KNMusic.core.mongo import mongodb
 from KNMusic.misc import SUDOERS
 from KNMusic.utils.keyboard import ikb
 from KNMusic.utils.permissions import adminsOnly, member_permissions
+from pyrogram import filters
+from pyrogram.enums import ChatMembersFilter
+from pyrogram.errors.exceptions.bad_request_400 import UserAlreadyParticipant
+from pyrogram.types import ChatJoinRequest
 
 approvaldb = mongodb.autoapprove
 
+
 def smallcap(text):
     trans_table = str.maketrans(
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿"
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿",
     )
     return text.translate(trans_table)
+
 
 @app.on_message(filters.command("autoapprove") & filters.group)
 @adminsOnly("can_change_info")

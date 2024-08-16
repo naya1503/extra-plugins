@@ -1,19 +1,15 @@
 import logging
 import uuid
 
+from KNMusic import app
+from KNMusic.utils.database import get_assistant
 from pyrogram import filters
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.raw import base
 from pyrogram.raw.functions.channels import GetFullChannel
-from pyrogram.raw.functions.phone import (
-    CreateGroupCall,
-    DiscardGroupCall,
-    GetGroupParticipants,
-)
+from pyrogram.raw.functions.phone import (CreateGroupCall, DiscardGroupCall,
+                                          GetGroupParticipants)
 from pyrogram.types import Message
-
-from KNMusic import app
-from KNMusic.utils.database import get_assistant
 
 
 @app.on_message(filters.command(["vcstart", "onvc", "vcon", "startvc"]) & filters.group)
@@ -69,7 +65,7 @@ async def endvc(client, message: Message):
             await hell.edit_text(e)
 
 
-@app.on_message(filters.command(["vcuser", "vcusers", "vcmembers"]) & filters.group )
+@app.on_message(filters.command(["vcuser", "vcusers", "vcmembers"]) & filters.group)
 async def vcmembers(client, message: Message):
     userbot = await get_assistant(message.chat.id)
     hell = await message.reply_text("Getting Voice Chat members...")

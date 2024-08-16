@@ -1,31 +1,22 @@
 import datetime
 from re import findall
 
-from pyrogram import filters
-from pyrogram.enums import ChatMemberStatus as CMS
-from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
-from pyrogram.types import (
-    Chat,
-    ChatMemberUpdated,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-)
-
 from KNMusic import app
 from KNMusic.misc import SUDOERS
-from .notes import extract_urls
 from KNMusic.utils.database import is_gbanned_user
-
-from utils import (
-    del_welcome,
-    get_welcome,
-    set_welcome,
-)
-
-from utils.error import capture_err
 from KNMusic.utils.functions import check_format, extract_text_and_keyb
 from KNMusic.utils.keyboard import ikb
 from KNMusic.utils.permissions import adminsOnly
+from pyrogram import filters
+from pyrogram.enums import ChatMemberStatus as CMS
+from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
+from pyrogram.types import (Chat, ChatMemberUpdated, InlineKeyboardButton,
+                            InlineKeyboardMarkup)
+
+from utils import del_welcome, get_welcome, set_welcome
+from utils.error import capture_err
+
+from .notes import extract_urls
 
 
 async def handle_new_member(member, chat):
@@ -98,7 +89,7 @@ async def send_welcome_message(chat: Chat, user_id: int, delete: bool = False):
     if "{TIME}" in text:
         TIME = datetime.datetime.now().strftime("%H:%M:%S")
         text = text.replace("{TIME}", f"{TIME} UTC")
- 
+
     if welcome == "Text":
         m = await app.send_message(
             chat.id,

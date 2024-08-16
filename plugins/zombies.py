@@ -1,10 +1,10 @@
 import asyncio
 
-from pyrogram import enums, filters
-from pyrogram.enums import ChatMemberStatus
-from pyrogram.errors import FloodWait
 from KNMusic import app
 from KNMusic.utils.permissions import adminsOnly
+from pyrogram import filters
+from pyrogram.enums import ChatMemberStatus
+from pyrogram.errors import FloodWait
 
 chatQueue = []
 
@@ -12,7 +12,7 @@ stopProcess = False
 
 
 @app.on_message(filters.command(["zombies"]))
-@adminsOnly("can_restrict_members") 
+@adminsOnly("can_restrict_members")
 async def remove(client, message):
 
     global stopProcess
@@ -86,6 +86,7 @@ async def remove(client, message):
             )
     except FloodWait as e:
         await asyncio.sleep(e.value)
+
 
 __MODULE__ = "Zombies"
 __HELP__ = """<blockquote><b>

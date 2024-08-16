@@ -1,5 +1,5 @@
-from pyrogram import filters
 from KNMusic import app
+from pyrogram import filters
 
 
 @app.on_message(filters.command("id"))
@@ -11,7 +11,9 @@ async def get_id(client, message):
             )
         elif not message.reply_to_message.sticker or message.reply_to_message is None:
             if message.reply_to_message.forward_from_chat:
-                await message.reply(f"The forwarded {str(message.reply_to_message.forward_from_chat.type)[9:].lower()}, {message.reply_to_message.forward_from_chat.title} has an ID of <code>{message.reply_to_message.forward_from_chat.id}</code>")
+                await message.reply(
+                    f"The forwarded {str(message.reply_to_message.forward_from_chat.type)[9:].lower()}, {message.reply_to_message.forward_from_chat.title} has an ID of <code>{message.reply_to_message.forward_from_chat.id}</code>"
+                )
 
             elif message.reply_to_message.forward_from:
                 await message.reply(
@@ -52,6 +54,7 @@ async def get_id(client, message):
             )
     except Exception as r:
         await message.reply(f"An error occurred while getting the ID. {r}")
+
 
 __MODULE__ = "UserID"
 __HELP__ = """<blockquote><b>

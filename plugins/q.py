@@ -1,8 +1,9 @@
 from io import BytesIO
+
 from httpx import AsyncClient, Timeout
+from KNMusic import app
 from pyrogram import filters
 from pyrogram.types import Message
-from KNMusic import app
 
 fetch = AsyncClient(
     http2=True,

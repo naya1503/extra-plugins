@@ -1,10 +1,9 @@
 import random
 
 import requests
+from KNMusic import app
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-
-from KNMusic import app
 
 
 @app.on_message(filters.command(["wall", "wallpaper"]))
@@ -32,10 +31,11 @@ async def wall(_, message: Message):
             ),
         )
         await m.delete()
-    except Exception as e:
+    except Exception:
         await m.edit_text(
             f"`wallpaper not found for : `{text}`",
         )
+
 
 __MODULE__ = "Wall"
 __HELP__ = """<blockquote><b>

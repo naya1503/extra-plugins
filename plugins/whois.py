@@ -1,8 +1,7 @@
+from KNMusic import app
 from pyrogram import filters
 from pyrogram.errors import PeerIdInvalid
 from pyrogram.types import Message, User
-
-from KNMusic import app
 
 
 def ReplyCheck(message: Message):
@@ -83,6 +82,8 @@ async def whois(client, message):
         ),
         disable_web_page_preview=True,
     )
+
+
 __HELP__ = """<blockquote><b>
 **command:**
 

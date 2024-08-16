@@ -1,10 +1,9 @@
 import os
 
+from KNMusic import app
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from telegraph import upload_file
-
-from KNMusic import app
 
 
 @app.on_message(filters.command(["tgm", "tgt", "telegraph", "tl"]))
@@ -20,8 +19,7 @@ async def get_link_group(client, message):
             await text.edit_text(f"📥 downloading... {current * 100 / total:.1f}%")
 
         try:
-            local_path = await message.reply_to_message.download( progress=progress
-            )
+            local_path = await message.reply_to_message.download(progress=progress)
             await text.edit_text("📤 uploading to telegraph...")
             upload_path = upload_file(local_path)
             await text.edit_text(
@@ -40,16 +38,17 @@ async def get_link_group(client, message):
             try:
                 os.remove(local_path)
             except Exception:
-               pass
+                pass
         except Exception as e:
             await text.edit_text(f"❌ |file upload failed \n\n<i>reason: {e}</i>")
             try:
                 os.remove(local_path)
             except Exception:
-               pass
+                pass
             return
     except Exception:
         pass
+
 
 __HELP__ = """<blockquote><b>
 **telegraph upload bot commands**

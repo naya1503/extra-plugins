@@ -1,9 +1,8 @@
 import logging
 
 from googlesearch import search
-from pyrogram import filters
-
 from KNMusic import api, app
+from pyrogram import filters
 
 
 @app.on_message(filters.command(["google", "gle"]))

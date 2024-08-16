@@ -2,9 +2,8 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from pyrogram import filters
-
 from KNMusic import app
+from pyrogram import filters
 
 
 def get_video_title(video_id):

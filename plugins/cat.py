@@ -1,15 +1,9 @@
 import requests
-from pyrogram import filters
-from pyrogram.types import (
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    InputMediaPhoto,
-    Message,
-)
-
 from config import BANNED_USERS
 from KNMusic import app
+from pyrogram import filters
+from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
+                            InlineKeyboardMarkup, InputMediaPhoto, Message)
 
 close_keyboard = InlineKeyboardMarkup(
     [

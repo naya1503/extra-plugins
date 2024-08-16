@@ -1,32 +1,22 @@
 import datetime
 from re import findall
 
-from pyrogram import filters
-from pyrogram.enums import ChatMemberStatus as CMS
-from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
-from pyrogram.types import (
-    Chat,
-    ChatMemberUpdated,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Message,
-)
 from KNMusic import app
 from KNMusic.misc import SUDOERS
-from .notes import extract_urls
 from KNMusic.utils.database import is_gbanned_user
-from utils import (
-    del_goodbye,
-    get_goodbye,
-    set_goodbye,
-    is_greetings_on,
-    set_greetings_on,
-    set_greetings_off,
-)
-from utils.error import capture_err
 from KNMusic.utils.functions import check_format, extract_text_and_keyb
 from KNMusic.utils.keyboard import ikb
 from KNMusic.utils.permissions import adminsOnly
+from pyrogram import filters
+from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
+from pyrogram.types import (Chat, InlineKeyboardButton, InlineKeyboardMarkup,
+                            Message)
+
+from utils import (del_goodbye, get_goodbye, is_greetings_on, set_goodbye,
+                   set_greetings_off, set_greetings_on)
+from utils.error import capture_err
+
+from .notes import extract_urls
 
 
 async def handle_left_member(member, chat):
@@ -50,18 +40,21 @@ async def handle_left_member(member, chat):
     except ChatAdminRequired:
         return
 
+
 @app.on_message(filters.left_chat_member & filters.group, group=6)
 @capture_err
-async def goodbye(_, m:Message):
+async def goodbye(_, m: Message):
 
     member = await app.get_users(m.from_user.id)
     chat = m.chat
     return await handle_left_member(member, chat)
 
 
-async def send_left_message(chat: Chat, user_id: int, delete: bool = False, nothing: bool = False):
+async def send_left_message(
+    chat: Chat, user_id: int, delete: bool = False, nothing: bool = False
+):
     ison = await is_greetings_on(chat.id, "goodbye")
-    
+
     if ison is None and not nothing:
         await set_greetings_on(chat.id, "goodbye")
         goodbye = "Animation"
@@ -76,15 +69,15 @@ async def send_left_message(chat: Chat, user_id: int, delete: bool = False, noth
 
     if not raw_text:
         return
-    
+
     text = raw_text
     keyb = None
-    
+
     if findall(r"\[.+\,.+\]", raw_text):
         text, keyb = extract_text_and_keyb(ikb, raw_text)
-    
+
     u = await app.get_users(user_id)
-    
+
     replacements = {
         "{GROUPNAME}": chat.title,
         "{NAME}": u.mention,
@@ -94,13 +87,13 @@ async def send_left_message(chat: Chat, user_id: int, delete: bool = False, noth
         "{USERNAME}": u.username or "None",
         "{DATE}": datetime.datetime.now().strftime("%Y-%m-%d"),
         "{WEEKDAY}": datetime.datetime.now().strftime("%A"),
-        "{TIME}": datetime.datetime.now().strftime("%H:%M:%S") + " UTC"
+        "{TIME}": datetime.datetime.now().strftime("%H:%M:%S") + " UTC",
     }
-    
+
     for placeholder, value in replacements.items():
         if placeholder in text:
             text = text.replace(placeholder, value)
-    
+
     if goodbye == "Text":
         m = await app.send_message(
             chat.id,
@@ -122,6 +115,7 @@ async def send_left_message(chat: Chat, user_id: int, delete: bool = False, noth
             caption=text,
             reply_markup=keyb,
         )
+
 
 @app.on_message(filters.command("setgoodbye") & ~filters.private)
 @adminsOnly("can_change_info")
@@ -192,31 +186,34 @@ async def del_goodbye_func(_, message):
     chat_id = message.chat.id
     await del_goodbye(chat_id)
     await message.reply_text("goodbye message has been deleted.")
- 
+
+
 @app.on_message(filters.command("goodbye") & ~filters.private)
 @adminsOnly("can_change_info")
 async def goodbye(client, message: Message):
     command = message.text.split()
-    
+
     if len(command) == 1:
         return await get_goodbye_func(client, message)
-    
+
     if len(command) == 2:
         action = command[1].lower()
         if action in ["on", "enable", "y", "yes", "true", "t"]:
             success = await set_greetings_on(message.chat.id, "goodbye")
             if success:
-                await message.reply_text("I'll be saying goodbye to any leavers from now on!")
+                await message.reply_text(
+                    "I'll be saying goodbye to any leavers from now on!"
+                )
             else:
                 await message.reply_text("Failed to enable goodbye messages.")
-        
+
         elif action in ["off", "disable", "n", "no", "false", "f"]:
             success = await set_greetings_off(message.chat.id, "goodbye")
             if success:
                 await message.reply_text("I'll stay quiet when people leave.")
             else:
                 await message.reply_text("Failed to disable goodbye messages.")
-        
+
         else:
             await message.reply_text(
                 "Invalid command. Please use:\n"
@@ -231,7 +228,7 @@ async def goodbye(client, message: Message):
             "/goodbye [on, y, true, enable, t] - to turn on goodbye messages\n"
             "/goodbye [off, n, false, disable, f, no] - to turn off goodbye messages"
         )
- 
+
 
 async def get_goodbye_func(_, message):
     chat = message.chat

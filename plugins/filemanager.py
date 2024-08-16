@@ -5,11 +5,11 @@ import time
 from inspect import getfullargspec
 from os.path import exists, isdir
 
+from KNMusic import app
+from KNMusic.misc import SUDOERS
 from pyrogram import filters
 from pyrogram.types import Message
 
-from KNMusic import app
-from KNMusic.misc import SUDOERS
 from utils.error import capture_err
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
@@ -18,7 +18,7 @@ MAX_MESSAGE_SIZE_LIMIT = 4095
 @app.on_message(filters.command("ls") & ~filters.forwarded & ~filters.via_bot & SUDOERS)
 @capture_err
 async def lst(_, message):
-    prefix = message.text.split()[0][0]
+    message.text.split()[0][0]
     chat_id = message.chat.id
     path = os.getcwd()
     text = message.text.split(" ", 1)

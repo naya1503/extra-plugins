@@ -1,16 +1,11 @@
 import requests
+from KNMusic import app
 from pyrogram import filters
 from pyrogram.enums import ChatAction
 from TheApi import api
 
-from KNMusic import app
 
-
-@app.on_message(
-    filters.command(
-        ["chatgpt", "ai", "ask"], prefixes=["/"]
-    )
-)
+@app.on_message(filters.command(["chatgpt", "ai", "ask"], prefixes=["/"]))
 async def chatgpt_chat(bot, message):
     if len(message.command) < 2 and not message.reply_to_message:
         await message.reply_text(

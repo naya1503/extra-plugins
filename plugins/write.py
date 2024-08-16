@@ -1,7 +1,6 @@
+from KNMusic import app
 from pyrogram import filters
 from TheApi import api
-
-from KNMusic import app
 
 
 @app.on_message(filters.command(["write"]))
@@ -21,6 +20,7 @@ async def write(client, message):
         await nan.delete()
     except Exception as e:
         await nan.edit(e)
+
 
 __MODULE__ = "Write"
 __HELP__ = """<blockquote><b>

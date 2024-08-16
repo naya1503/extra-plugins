@@ -1,34 +1,20 @@
-import re
 import datetime
-from pyrogram import filters
-from pyrogram.types import (
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-)
-
-from typing import Dict, List, Union
-from KNMusic import app
-from KNMusic.core.mongo import mongodb
-from utils.error import capture_err
-from KNMusic.utils.permissions import adminsOnly, member_permissions
-from KNMusic.utils.keyboard import ikb
-from .notes import extract_urls
-from KNMusic.utils.functions import (
-    check_format,
-    extract_text_and_keyb,
-    get_data_and_name,
-)
-from KNMusic.utils.database import (
-    delete_filter,
-    deleteall_filters,
-    get_filter,
-    get_filters_names,
-    save_filter,
-)
+import re
 
 from config import BANNED_USERS
+from KNMusic import app
+from KNMusic.utils.database import (deleteall_filters, get_filter,
+                                    get_filters_names, save_filter)
+from KNMusic.utils.functions import (check_format, extract_text_and_keyb,
+                                     get_data_and_name)
+from KNMusic.utils.keyboard import ikb
+from KNMusic.utils.permissions import adminsOnly, member_permissions
+from pyrogram import filters
+from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup)
 
+from utils.error import capture_err
+
+from .notes import extract_urls
 
 __MODULE__ = "Filters"
 __HELP__ = """<blockquote><b>/filters To Get All The Filters In The Chat.
@@ -46,6 +32,8 @@ You can use markdown or html to save text too.
 
 Checkout /markdownhelp to know more about formattings and other syntax.
 </b></blockquote>"""
+
+
 @app.on_message(filters.command("filter") & ~filters.private & ~BANNED_USERS)
 @adminsOnly("can_change_info")
 async def save_filters(_, message):
@@ -59,7 +47,9 @@ async def save_filters(_, message):
             replied_message = message
         data, name = await get_data_and_name(replied_message, message)
         if len(name) < 2:
-            return await message.reply_text(f"to filter the {name} must be greater then 𝟸 words")
+            return await message.reply_text(
+                f"to filter the {name} must be greater then 𝟸 words"
+            )
         if data == "error":
             return await message.reply_text(
                 "**usasge:**\n__/filter [FILTER_NAME] [CONTENT]__\n`-----------OR-----------`\nreply to a message with. \n/filter [FILTER_NAME]."
@@ -110,7 +100,7 @@ async def save_filters(_, message):
             "data": data,
             "file_id": file_id,
         }
-        
+
         chat_id = message.chat.id
         await save_filter(chat_id, name, _filter)
         return await message.reply_text(f"__**saved filter {name}.**__")
@@ -132,12 +122,20 @@ async def get_filterss(_, message):
         msg += f"**-** `{_filter}`\n"
     await message.reply_text(msg)
 
+
 @app.on_message(
-    filters.text & ~filters.private & ~filters.channel & ~filters.via_bot & ~filters.forwarded & ~BANNED_USERS, group=1)
+    filters.text
+    & ~filters.private
+    & ~filters.channel
+    & ~filters.via_bot
+    & ~filters.forwarded
+    & ~BANNED_USERS,
+    group=1,
+)
 @capture_err
 async def filters_re(_, message):
     from_user = message.from_user if message.from_user else message.sender_chat
-    user_id = from_user.id
+    from_user.id
     chat_id = message.chat.id
     text = message.text.lower().strip()
     if not text:
@@ -170,7 +168,7 @@ async def filters_re(_, message):
                     susername = message.from_user.username or "None"
                     data = data.replace("{USERNAME}", susername)
                 if "{DATE}" in data:
-                    DATE = datetime.datetime.now().strftime("%Y-%m-%d")        
+                    DATE = datetime.datetime.now().strftime("%Y-%m-%d")
                     data = data.replace("{DATE}", DATE)
                 if "{WEEKDAY}" in data:
                     WEEKDAY = datetime.datetime.now().strftime("%A")
@@ -185,7 +183,11 @@ async def filters_re(_, message):
                         data, keyb = keyboard
             replied_message = message.reply_to_message
             if replied_message:
-                replied_user = replied_message.from_user if replied_message.from_user else replied_message.sender_chat
+                replied_user = (
+                    replied_message.from_user
+                    if replied_message.from_user
+                    else replied_message.sender_chat
+                )
                 if text.startswith("~"):
                     await message.delete()
                 if replied_user.id != from_user.id:
@@ -257,9 +259,7 @@ async def stop_all(_, message):
         keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "yes, do it", callback_data="stop_yes"
-                    ),
+                    InlineKeyboardButton("yes, do it", callback_data="stop_yes"),
                     InlineKeyboardButton("no, don't do it", callback_data="stop_no"),
                 ]
             ]

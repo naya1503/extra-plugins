@@ -1,9 +1,8 @@
 import asyncio
 
+from KNMusic import app
 from pyrogram import enums, filters
 from pyrogram.errors import FloodWait
-
-from KNMusic import app
 
 
 @app.on_message(filters.command("bots") & filters.group)
@@ -27,6 +26,7 @@ async def bots(client, message):
             await app.send_message(message.chat.id, text3)
     except FloodWait as e:
         await asyncio.sleep(e.value)
+
 
 __MODULE__ = "Bot"
 __HELP__ = """<blockquote><b>

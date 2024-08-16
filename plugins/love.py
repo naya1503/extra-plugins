@@ -1,8 +1,7 @@
 import random
 
-from pyrogram import filters
-
 from KNMusic import app
+from pyrogram import filters
 
 
 def get_random_message(love_percentage):
@@ -46,6 +45,7 @@ def love_command(client, message):
     else:
         response = "Please enter two names after /love command."
     app.send_message(message.chat.id, response)
+
 
 __MODULE__ = "Love"
 __HELP__ = """<blockquote><b>

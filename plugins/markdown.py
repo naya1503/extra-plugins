@@ -1,9 +1,8 @@
+from KNMusic import app
+from KNMusic.utils.functions import MARKDOWN
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.filters import command
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-
-from KNMusic import app
-from KNMusic.utils.functions import MARKDOWN
 
 
 @app.on_message(command("markdownhelp"))

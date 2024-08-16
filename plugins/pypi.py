@@ -1,8 +1,7 @@
 import requests
+from KNMusic import app
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
-from KNMusic import app
 
 
 def get_pypi_info(package_name):
@@ -47,6 +46,7 @@ async def pypi_info_command(client, message):
         await message.reply_text(
             "Please provide a package name after the /pypi command."
         )
+
 
 __MODULE__ = "Pypi"
 __HELP__ = """<blockquote>

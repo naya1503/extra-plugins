@@ -1,7 +1,6 @@
 import requests
-from pyrogram import filters
-
 from KNMusic import app
+from pyrogram import filters
 
 
 @app.on_message(filters.command(["ig", "instagram", "reel"]))
@@ -26,6 +25,7 @@ async def download_instagram_video(client, message):
         await client.send_video(message.chat.id, video_url)
     else:
         await a.edit("Failed to download reel")
+
 
 __MODULE__ = "Reel"
 __HELP__ = """<blockquote><b>
